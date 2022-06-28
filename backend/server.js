@@ -1,9 +1,24 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+
 const db = require("./db");
 
 const app = express();
 
-app.use(express.json());
+// json 형대토 오는 요청의 본문을 해석해줄수있게 등록
+app.use(bodyParser.json());
+
+// 테이블 생성하기
+db.pool.query(
+  `CREATE TABLE lists (
+  id INTEGER AUTO_INCREMENT,
+  value TEXT, 
+  PRIMARY KEY (id)
+)`,
+  (err, results, fileds) => {
+    console.log("results", results);
+  }
+);
 
 app.listen(5000, () => {
   console.log("server started on 5000");
